@@ -32,11 +32,13 @@ class Notes extends Component {
 
     render() {
         console.log(this.state.notes);
+        let iconStyle={
+            fontSize:"16px"
+        }
         let numericDateString = (date)=>{
             let DateObject = new Date(date),
                 numericOptions = {
-                    year: "numeric",
-                    month: "short",
+                    month: "numeric",
                     day: "numeric",
                     hour: "2-digit",
                     minute: "2-digit"
@@ -48,17 +50,19 @@ class Notes extends Component {
                 {this.state.notes.map((note,i) => {
                     return <Grid item xs={3}  key={i}>
                         <Paper className={"note"}>
-                            <div className={"actions"}>
-                                <EditIcon/>
-                                <AlertIcon/>
-                                <RemoveIcon/>
-                            </div>
                             <Typography className={"body"} align={'left'}>
                                 {note.body}
                             </Typography>
-                            <Typography className={"date"} align={'right'}>
-                                {numericDateString(note.timestamp)}
+                            <Grid container>
+                            <Typography className={"date"} align={'left'} style={{fontWeight:"500"}}>
+                                {numericDateString(note.timestamp).replace(",","・")}
                             </Typography>
+                            <div className={"actions"}>
+                                <EditIcon style={iconStyle}/>
+                                <AlertIcon style={iconStyle}/>
+                                <RemoveIcon style={iconStyle}/>
+                            </div>
+                            </Grid>
                         </Paper>
                     </Grid>
                 })}
