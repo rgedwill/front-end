@@ -1,7 +1,7 @@
 import * as actions from "./../actions/actionTypes";
 import initialState from "./initialState";
 
-export default function auth(state = initialState.Authentication, {payload, type}) {
+export default (state = initialState.Authentication, {payload, type}) => {
     switch (type) {
         case actions.LOGIN_SUCCESSFUL:
             return onSuccess(state, payload);
@@ -10,7 +10,7 @@ export default function auth(state = initialState.Authentication, {payload, type
         default:
             return state;
     }
-}
+};
 
 const onSuccess = (state, {response, savePassword}) => {
     if (savePassword) {

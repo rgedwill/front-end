@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
 import PropTypes from "prop-types";
 import React, {useEffect, useState} from "react";
+import {useLoginStatus} from "./utils";
 
 
 // material UI Imports
@@ -17,20 +18,30 @@ import Typography from "@material-ui/core/Typography";
 
 import "./LoginPage.scss";
 
+// eslint-disable-next-line max-lines-per-function, max-statements
 const LoginPage = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [savePassword, setSavePassword] = useState(false);
     const [emailEmpty, setEmailEmpty] = useState(false);
     const [passwordEmpty, setPasswordEmpty] = useState(false);
+    const [hasTyped, setHasTyped] = useState(true);
+    const isLoggedIn = useLoginStatus();
+
+    const failedLogin = props.requestStatus.login &&
+        props.requestStatus.login !== REQUEST_STARTED &&
+        (props.requestStatus.login < 200 || props.requestStatus.login >= 300);
+
+    const showErr = failedLogin && !hasTyped;
 
     const handleTextInput = (setter, validator, {target}) => {
         setter(target.value);
-        props.authActions.resetAttemptStatus();
+        setHasTyped(true);
         validator(!target.value);
     };
 
     const login = () => {
+        setHasTyped(false);
         props.authActions.login(email, password, savePassword);
     };
 
@@ -41,11 +52,7 @@ const LoginPage = (props) => {
         };
     });
 
-    const failedLogin = props.requestStatus.login &&
-        props.requestStatus.login !== REQUEST_STARTED &&
-        (props.requestStatus.login < 200 || props.requestStatus.login > 200);
-
-    if (props.auth.token) {
+    if (isLoggedIn) {
         return <Redirect to="/" />;
     }
 
@@ -75,7 +82,7 @@ const LoginPage = (props) => {
                     }}>
                         <TextField
                             className="email"
-                            error={failedLogin || emailEmpty}
+                            error={showErr}
                             label="E-Mail"
                             margin="dense"
                             onChange={(event) => {
@@ -85,7 +92,7 @@ const LoginPage = (props) => {
                         <TextField
                             autoComplete="current-password"
                             className="password"
-                            error={failedLogin || passwordEmpty}
+                            error={showErr}
                             id="standard-password-input"
                             label="Password"
                             margin="normal"
@@ -126,7 +133,7 @@ const LoginPage = (props) => {
                         </Button>
                     </form>
                     {
-                        failedLogin &&
+                        showErr &&
                         <Typography color="error">
                             Invalid credentials
                         </Typography>

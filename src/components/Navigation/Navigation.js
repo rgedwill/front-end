@@ -26,7 +26,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import "./Navigation.scss";
 import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 
-function Navigation(props) {
+const Navigation = (props) => {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [isLogin, setIsLogin] = useState(false);
 
@@ -36,13 +36,13 @@ function Navigation(props) {
     }
 
     const NavList = [
-        { name: "Dashboard", link: "/", icon: <DashboardIcon /> },
-        { name: "Scheduler", link: "/scheduler", icon: <EventIcon /> },
+        {name: "Dashboard", link: "/", icon: <DashboardIcon />},
+        {name: "Scheduler", link: "/scheduler", icon: <EventIcon />},
         // {name: "Courses", link: "/courses", icon: <CourseIcon/>},
-        { name: "Registration", link: "/registration", icon: <AssignmentIcon /> },
+        {name: "Registration", link: "/registration", icon: <AssignmentIcon />},
         // {name: "Attendance", link: "/attendance", icon: <AttendanceIcon/>},
         // {name: "Gradebook", link: "/gradebook", icon: <ClassIcon/>},
-        { name: "Accounts", link: "/accounts", icon: <AccountsIcon /> },
+        {name: "Accounts", link: "/accounts", icon: <AccountsIcon />},
     ];
 
     const drawer = (
@@ -122,7 +122,7 @@ function Navigation(props) {
             </div>
         </MuiThemeProvider>
     );
-}
+};
 
 Navigation.propTypes = {
     auth: PropTypes.shape({}),

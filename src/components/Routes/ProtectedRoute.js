@@ -1,34 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Route, Redirect} from "react-router-dom";
-import {connect} from "react-redux";
+import {Redirect, Route} from "react-router-dom";
+import {useLoginStatus} from "../Authentication/utils";
 
-function ProtectedRoute({component, render, auth, ...rest}) {
+const ProtectedRoute = ({component, render, ...rest}) => {
+    const isLoggedIn = useLoginStatus();
+
+    // eslint-disable-next-line react/no-multi-comp
+    const renderRoute = () => isLoggedIn
+        ? component || (render && render(rest))
+        : <Redirect
+            push
+            to="/login" />;
     return (
         <Route
             {...rest}
-            exact
-            render={() =>
-                auth.token
-                    ? component || (render && render(rest))
-                    : <Redirect push to="/login" />
-            } />
+            render={renderRoute} />
     );
-}
-
-ProtectedRoute.propTypes = {
-    component: PropTypes.any,
-    render: PropTypes.func,
-    auth: PropTypes.object,
 };
 
-const mapStateToProps = (state) => ({
-    auth: state.auth,
-});
+ProtectedRoute.propTypes = {
+    "component": PropTypes.any,
+    "render": PropTypes.func,
+};
 
-const mapDispatchToProps = () => ({});
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ProtectedRoute);
+export default ProtectedRoute;
