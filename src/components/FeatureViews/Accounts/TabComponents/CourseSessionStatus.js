@@ -161,14 +161,14 @@ class CourseSessionStatus extends Component {
 
                     <Typography align={'left'}>
                         Student:
-                        <Link to={'/accounts/student/'+this.state.studentID}>
+                        <Link to={'/student/'+this.state.studentID}>
                               {this.props.usersList.StudentList[this.state.studentID].name}
                         </Link>
                     </Typography>
 
                     <Typography align={'left'}>
                         Instructor:
-                        <Link to={'/accounts/instructor/'+this.state.course.instructor_id}>
+                        <Link to={'/instructor/'+this.state.course.instructor_id}>
                               {this.props.usersList.InstructorList[this.state.course.instructor_id].name}
                         </Link>
                     </Typography>

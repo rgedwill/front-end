@@ -46,7 +46,7 @@ const LoginPage = (props) => {
         (props.requestStatus.login < 200 || props.requestStatus.login > 200);
 
     if (props.auth.token) {
-        return <Redirect to="/accounts" />;
+        return <Redirect to="/" />;
     }
 
     return (

@@ -95,7 +95,7 @@ const PayCourses = (props) => {
                         "float": "right",
                     }}
                     component={NavLink}
-                    to={`/accounts/parents/${props.user.user_id}/pay`}>
+                    to={`/parents/${props.user.user_id}/pay`}>
                     $ Pay
                 </Button>
             </Grid>

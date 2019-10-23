@@ -119,7 +119,7 @@ const RegistrationCourse = (props) => {
                         "textDecoration": "none",
                         "color": "inherit",
                     }}
-                    to={`/accounts/student/${student_id}`}>
+                    to={`/student/${student_id}`}>
                     {student.name}
                 </NavLink>
             ),
@@ -130,7 +130,7 @@ const RegistrationCourse = (props) => {
                         "textDecoration": "none",
                         "color": "inherit",
                     }}
-                    to={`/accounts/parent/${student.parent_id}`}>
+                    to={`/parent/${student.parent_id}`}>
                     {parent.name}
                 </NavLink>
             ),
@@ -247,7 +247,7 @@ const RegistrationCourse = (props) => {
                                 }
                                 label={instructor.name}
                                 component={NavLink}
-                                to={`/accounts/instructor/${instructor.user_id}`}
+                                to={`/instructor/${instructor.user_id}`}
                                 className="chip" />
                             <Typography align="left" className="text">
                                 {startTime} - {endTime}

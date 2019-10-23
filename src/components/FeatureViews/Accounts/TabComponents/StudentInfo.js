@@ -68,7 +68,7 @@ class StudentInfo extends Component {
                     <Grid item xs={12} sm={6} className="ProfileCard" key={student.user_id}>
                         <Card
                             // onClick={() => {
-                            //     this.props.history.push(`/accounts/student/${student.user_id}`);
+                            //     this.props.history.push(`/student/${student.user_id}`);
                             // }}
                             key={student.user_id}
                             // style={{
