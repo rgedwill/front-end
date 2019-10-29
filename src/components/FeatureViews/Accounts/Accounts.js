@@ -17,6 +17,10 @@ import Button from "@material-ui/core/Button";
 import CardActions from "@material-ui/core/CardActions";
 import {withRouter} from "react-router-dom";
 
+
+import * as userActions from "../../../actions/apiActions"
+import { bindActionCreators } from "redux";
+
 import "./Accounts.scss";
 import Avatar from "@material-ui/core/Avatar";
 import ProfileCard from "./ProfileCard";
@@ -51,6 +55,7 @@ class Accounts extends Component {
                 return {usersList: usersList,}
             });
         }
+        this.props.userActions.fetchStudents();
     }
     resize() {
         let currentHideNav = (window.innerWidth <= 760);
@@ -245,7 +250,9 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return {};
+    return {
+        "userActions": bindActionCreators(userActions, dispatch),
+    }
 }
 
 export default withRouter(connect(

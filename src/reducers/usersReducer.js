@@ -1,15 +1,17 @@
 import * as actions from "./../actions/actionTypes";
 import initialState from "./initialState";
-import {REQUEST_ALL} from "../actions/apiActions";
+import { REQUEST_ALL } from "../actions/apiActions";
 
-export default function users(state = initialState.Users, {payload, type}) {
+export default function users(state = initialState.Users, { payload, type }) {
     switch (type) {
         case actions.FETCH_STUDENT_SUCCESSFUL:
-            return addStudents(state, payload);
+            return handleStudentsFetch(state, payload);
         case actions.FETCH_PARENT_SUCCESSFUL:
             return addParents(state, payload);
         case actions.FETCH_INSTRUCTOR_SUCCESSFUL:
             return handleInstructorsFetch(state, payload);
+        case actions.FETCH_NOTE_SUCCESSFUL:
+            return handleNoteFetch(state, payload);
         default:
             return state;
     }
@@ -81,12 +83,12 @@ const addParents = (state, parents) => {
     return newState;
 };
 
-const handleInstructorsFetch = (state, {id, response}) => {
-    const {data} = response;
+const handleInstructorsFetch = (state, { id, response }) => {
+    const { data } = response;
     if (id !== REQUEST_ALL) {
         return updateInstructor(state, id, data);
     }
-    let {InstructorList} = state;
+    let { InstructorList } = state;
     data.forEach((instructor) => {
         InstructorList = updateInstructor(InstructorList, instructor.user.id, instructor);
     });
@@ -94,6 +96,44 @@ const handleInstructorsFetch = (state, {id, response}) => {
         ...state,
         InstructorList,
     };
+};
+
+const handleStudentsFetch = (state, { id, response }) => {
+    const { data } = response;
+    if (id !== REQUEST_ALL) {
+        return updateStudents(state, id, data);
+    }
+    let { StudentList } = state;
+    data.forEach((student) => {
+        StudentList = updateStudents(StudentList, student.user.id, student);
+    });
+    console.log(StudentList);
+    return {
+        ...state,
+        StudentList,
+    };
+};
+
+const handleNoteFetch = (state, { user_id, response }) => {
+    const { data } = response;
+    let newState = state;
+
+    let newNote = {};
+    for(let note in data){
+        newNote[note.id]=note
+    }
+
+    if (user_id in state.InstructorList) {
+        newState.InstructorList[user_id].notes=newNote;
+    }
+    if (user_id in state.StudentList) {
+        newState.StudentList[user_id].notes=newNote;
+    }
+    if (user_id in state.ParentList) {
+        newState.ParentList[user_id].notes=newNote;
+    }
+
+    return newState;
 };
 
 
@@ -170,3 +210,30 @@ const updateInstructor = (instructors, id, instructor) => ({
         "notes": {},
     },
 });
+
+const updateStudents = (students, id, student) => ({
+    ...students,
+    [id]: {
+        "user_id": student.user.id,
+        "gender": student.gender,
+        "birth_date": parseBirthday(student.birth_date),
+        "address": student.address,
+        "city": student.city,
+        "phone_number": student.phone_number,
+        "state": student.state,
+        "zipcode": student.zipcode,
+        "grade": student.grade,
+        "age": student.age,
+        "school": student.school,
+        "first_name": student.user.first_name,
+        "last_name": student.user.last_name,
+        "name": `${student.user.first_name} ${student.user.last_name}`,
+        "email": student.user.email,
+        "parent_id": student.parent,
+        // below is not from database
+        "role": "student",
+        "balance": 0,
+        "notes": {},
+    },
+});
+

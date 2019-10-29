@@ -3787,6 +3787,10 @@ function initRequests() {
             [GET]: {},
             [PATCH]: {},
         },
+        "note": {
+            [GET] : {},
+            [PATCH]: {},
+        },
     };
 }
 

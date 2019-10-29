@@ -2,11 +2,11 @@ import * as actions from "../actions/actionTypes";
 import initialState from "./initialState";
 import * as api from "../actions/apiActions";
 
-export default (state = initialState.RequestStatus, {payload, type}) => {
+export default (state = initialState.RequestStatus, { payload, type }) => {
     console.log(type)
     let status;
     if (payload && payload.response && payload.response.status) {
-        ({status} = payload.response);
+        ({ status } = payload.response);
     } else {
         // general server error
         status = 500;
@@ -51,6 +51,12 @@ export default (state = initialState.RequestStatus, {payload, type}) => {
         case actions.POST_INSTRUCTOR_FAILED:
             return updateInstructorPatch(state, payload.id, status);
 
+        case actions.FETCH_NOTE_STARTED:
+            return updateNoteFetch(state, payload.id, api.REQUEST_STARTED);
+        case actions.FETCH_NOTE_SUCCESSFUL:
+            return updateNoteFetch(state, payload.id, status);
+        case actions.FETCH_NOTE_FAILED:
+            return updateNoteFetch(state, payload.id, status);
         default:
             return state;
     }
@@ -88,5 +94,18 @@ const updateInstructorPatch = (state, id, status) => {
     console.log("hit")
     let newState = JSON.parse(JSON.stringify(state));
     newState.instructor[actions.PATCH][id] = status;
+    return newState;
+};
+
+const updateNotePatch = (state, id, status) => {
+    console.log("hit")
+    let newState = JSON.parse(JSON.stringify(state));
+    newState.note[actions.PATCH][id] = status;
+    return newState;
+};
+
+const updateNoteFetch = (state, id, status) => {
+    let newState = JSON.parse(JSON.stringify(state));
+    newState.note[actions.GET][id] = status;
     return newState;
 };

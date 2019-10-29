@@ -1,6 +1,10 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+
+import * as userActions from "../../../../actions/apiActions"
+import { bindActionCreators } from "redux";
+
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -28,7 +32,9 @@ class Notes extends Component {
                 notes: notes,
             }
         });
+        this.props.userActions.fetchNotes(3);
     }
+
 
     render() {
         let numericDateString = (date) => {
@@ -76,9 +82,13 @@ function mapStateToProps(state) {
     };
 }
 
+
 function mapDispatchToProps(dispatch) {
-    return {};
-}
+    return {
+        "userActions": bindActionCreators(userActions, dispatch),
+    }
+};
+
 
 export default connect(
     mapStateToProps,
