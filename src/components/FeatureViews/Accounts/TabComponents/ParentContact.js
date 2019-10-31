@@ -1,5 +1,5 @@
-import { connect } from 'react-redux';
-import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 
 
@@ -27,7 +27,7 @@ class ParentContact extends Component {
 
     goToRoute(route) {
         this.props.history.push(route);
-        
+
     }
 
     render() {
@@ -37,38 +37,38 @@ class ParentContact extends Component {
                 <Grid container spacing={16}>
                     <Grid item md={6} xs={12} >
                         <Paper className={"ParentContact"}
-                        onClick={() => {
-                            this.props.history.push(`/accounts/parent/${this.state.parent.user_id}`);
-                        }}
-                        key={this.state.parent.user_id}
-                        style={{
-                            "cursor": "pointer",
-                        }}>
+                            onClick={() => {
+                                this.props.history.push(`/accounts/parent/${this.state.parent.user_id}`);
+                            }}
+                            key={this.state.parent.user_id}
+                            style={{
+                                "cursor": "pointer",
+                            }}>
                             <div className="parent-header" align="left">
                                 <Typography className="header-text">
                                     {this.state.parent.name}
                                 </Typography>
                             </div>
                             <Grid container spacing={16} className="bodyText">
-                                    <Grid item xs={5} align="left" className="bold">
-                                        Relation
+                                <Grid item xs={5} align="left" className="bold">
+                                    Relation
                                     </Grid>
-                                    <Grid item xs={5} align="left">
-                                        {this.state.parent.relationship}
-                                    </Grid>
-                                    <Grid item xs={5} align="left" className="bold">
-                                        Phone
-                                    </Grid>
-                                    <Grid item xs={5} align="left">
-                                        {addDashes(this.state.parent.phone_number)}
-                                    </Grid>
-                                    <Grid item xs={5} align="left" className="bold">
-                                        Email
-                                    </Grid>
-                                    <Grid item xs={5} align="left">
-                                        {this.state.parent.email}
-                                    </Grid>
+                                <Grid item xs={5} align="left">
+                                    {this.state.parent.relationship}
                                 </Grid>
+                                <Grid item xs={5} align="left" className="bold">
+                                    Phone
+                                    </Grid>
+                                <Grid item xs={5} align="left">
+                                    {addDashes(this.state.parent.phone_number)}
+                                </Grid>
+                                <Grid item xs={5} align="left" className="bold">
+                                    Email
+                                    </Grid>
+                                <Grid item xs={5} align="left">
+                                    {this.state.parent.email}
+                                </Grid>
+                            </Grid>
                         </Paper>
                     </Grid>
                 </Grid>

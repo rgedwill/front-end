@@ -1,7 +1,7 @@
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -71,7 +71,7 @@ class Bio extends Component {
                                             {this.props.background.languages.map((languages) => {
                                                 return (
                                                     <Grid className="chipPadding">
-                                                        <Chip 
+                                                        <Chip
                                                             label={languages}
                                                             className="bioChip"
                                                             variant="outlined"

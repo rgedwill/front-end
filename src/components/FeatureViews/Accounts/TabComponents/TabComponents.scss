@@ -9,6 +9,10 @@
   position: relative;
   padding: 7%;
 
+  .noteNotification {
+    float: right;
+  }
+
   .actions {
     text-align: right;
     bottom: 5%;
@@ -21,10 +25,10 @@
       opacity: 1;
     }
   }
-  
-  .header{
+
+  .header {
     font-size: 1.2em;
-    font-weight:bold;
+    font-weight: bold;
   }
 
   .body {
@@ -46,29 +50,35 @@
   background: #f5f5f5;
   border: 1.5px solid #999999;
   border-style: dashed;
+
   .center {
     margin-top: 35%;
   }
 }
+
 .popup {
   .popUpActions {
     position: absolute;
     bottom: 5%;
   }
+
   .exit-popup {
-    padding-top:0%;
-    .textfield{
-      width:80%;
+    padding-top: 0%;
+
+    .textfield {
+      width: 80%;
       text-align: left;
     }
-    .notification{
+
+    .notification {
       margin-top: 7%;
       right: 10%;
       font-size: 40px;
-      position:absolute;
+      position: absolute;
     }
-    .bodyfield{
-      width:100%;
+
+    .bodyfield {
+      width: 100%;
       text-align: left;
     }
   }
@@ -78,28 +88,34 @@
 .Bio2 {
   position: relative;
   text-align: left;
+
   .Bio1 {
     right: 9%;
     padding: 5%;
     margin-top: -5%;
+
     .bioHeader {
       font-weight: bold;
       font-size: 20px;
       font-family: Roboto Slab;
     }
+
     .bioBody {
       font-size: 14px;
     }
   }
+
   .BioBackground {
     background-color: $bioBackgroundColor;
     position: relative;
     padding: 5%;
+
     .rowPadding {
       padding: 3%;
       margin-top: -5%;
       display: relative;
       align-content: left;
+
       .bioDescription {
         font-weight: 500;
         font-size: 16;
@@ -109,6 +125,7 @@
         white-space: nowrap;
       }
     }
+
     .chipPadding {
       padding-left: 5px;
       padding-right: 5px;
@@ -122,6 +139,7 @@
     }
   }
 }
+
 .ParentContact {
   .parent-header {
     position: absolute;
@@ -130,12 +148,14 @@
     width: 100%;
     top: 0;
     left: 0;
+
     .header-text {
       margin-left: 20px;
       color: white;
       font-size: 20px;
     }
   }
+
   .actions {
     text-align: right;
     opacity: 0;
@@ -146,14 +166,16 @@
     font-size: 15px;
     word-break: break-all;
     margin-top: 15%;
+
     .bold {
       font-weight: 900;
     }
   }
 }
+
 /* Instructor Courses */
 .accounts-table-heading,
-.accounts-table-row > * {
+.accounts-table-row>* {
   padding: 15px;
   cursor: pointer;
 }
@@ -168,9 +190,11 @@
 
 .accounts-table-row {
   position: relative;
+
   &:hover {
     border-left: solid 5px $primaryColor;
   }
+
   .accounts-table-text {
     font-size: 12px;
   }
@@ -205,14 +229,16 @@
 
 .course-session-status {
   padding: 3%;
+
   .sessions-left-chip {
     border-radius: 15px;
     width: 150px;
     top: 23%;
     right: 8%;
   }
+
   .accounts-table-heading,
-  .accounts-table-row > * {
+  .accounts-table-row>* {
     cursor: default;
   }
 }

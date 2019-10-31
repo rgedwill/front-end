@@ -23,8 +23,8 @@ class CourseViewer extends Component {
         });
     }
 
-    goToRoute(route){
-        this.props.history.push(this.props.match.url+route);
+    goToRoute(route) {
+        this.props.history.push(this.props.match.url + route);
     }
 
     setCourses = () => {
@@ -80,7 +80,7 @@ class CourseViewer extends Component {
         endDate = endDate.toLocaleDateString("en-US", dateOptions);
 
         return {
-            Days:Days,
+            Days: Days,
             startTime: startTime,
             endTime: endTime,
             startDate: startDate,
@@ -88,12 +88,12 @@ class CourseViewer extends Component {
         }
     }
 
-    numPaidCourses(courseID){
+    numPaidCourses(courseID) {
         let courseEnrollment = this.state.userEnrollments[courseID],
             enrollmentPayments = Object.values(courseEnrollment.session_payment_status),
             numPaidEnrollments = 0;
-        enrollmentPayments.forEach((paymentStatus)=>{
-            if(paymentStatus === 1){
+        enrollmentPayments.forEach((paymentStatus) => {
+            if (paymentStatus === 1) {
                 numPaidEnrollments++;
             }
         });
@@ -104,12 +104,12 @@ class CourseViewer extends Component {
 
     render() {
         this.setCourses();
-        let paymentStatus = (numPaidCourses)=>{
-            if(numPaidCourses>3) {
+        let paymentStatus = (numPaidCourses) => {
+            if (numPaidCourses > 3) {
                 return "good";
-            } else if(numPaidCourses <= 3 && numPaidCourses >0) {
+            } else if (numPaidCourses <= 3 && numPaidCourses > 0) {
                 return "warning";
-            } else if(numPaidCourses <= 0){
+            } else if (numPaidCourses <= 0) {
                 return "bad";
             }
         };
@@ -149,9 +149,9 @@ class CourseViewer extends Component {
                         let course = this.props.courses[courseID];
                         let {Days, startDate, endDate, startTime, endTime} = this.courseDataParser(course);
                         return (<Grid item xs={12} md={12}
-                                      className={'accounts-table-row'}
-                                      onClick={(e)=>{e.preventDefault(); this.goToRoute(`/${courseID}`)}}
-                                      key={courseID}>
+                            className={'accounts-table-row'}
+                            onClick={(e) => {e.preventDefault(); this.goToRoute(`/${courseID}`)}}
+                            key={courseID}>
                             <Paper square={true}>
                                 <Grid container>
                                     <Grid item xs={3} md={3}>

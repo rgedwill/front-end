@@ -1,11 +1,11 @@
-import { connect } from 'react-redux';
-import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import React, {Component} from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from "@material-ui/core/Paper";
 import BackButton from "../../../BackButton";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 class CourseSessionStatus extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class CourseSessionStatus extends Component {
 
     componentWillMount() {
         this.setState(() => {
-            let { accountID, courseID } = this.props.computedMatch.params;
+            let {accountID, courseID} = this.props.computedMatch.params;
             let calendarSessions = this.props.courseSessions[courseID],
                 paymentSessionStatus = this.props.enrollments[accountID][courseID].session_payment_status,
                 statusKey = (status) => {
@@ -88,8 +88,8 @@ class CourseSessionStatus extends Component {
             DaysString = Days[0];
         }
 
-        let timeOptions = { hour: "2-digit", minute: "2-digit" };
-        let dateOptions = { year: "numeric", month: "numeric", day: "numeric" };
+        let timeOptions = {hour: "2-digit", minute: "2-digit"};
+        let dateOptions = {year: "numeric", month: "numeric", day: "numeric"};
         let startDate = new Date(course.schedule.start_date + course.schedule.start_time),
             endDate = new Date(course.schedule.end_date + course.schedule.end_time),
             startTime = startDate.toLocaleTimeString("en-US", timeOptions),
@@ -110,12 +110,12 @@ class CourseSessionStatus extends Component {
     }
 
     sessionDataParse(session) {
-        let { start, end, course_id, status } = session;
+        let {start, end, course_id, status} = session;
         let startDate = new Date(start);
         let endDate = new Date(end);
 
-        let timeOptions = { hour: "2-digit", minute: "2-digit" };
-        let dateOptions = { year: "numeric", month: "numeric", day: "numeric" };
+        let timeOptions = {hour: "2-digit", minute: "2-digit"};
+        let dateOptions = {year: "numeric", month: "numeric", day: "numeric"};
 
         let DayConverter = {
             0: "Sunday",
@@ -180,27 +180,27 @@ class CourseSessionStatus extends Component {
 
                         </Grid>
                         <Grid item xs={3} md={3}>
-                            <Typography align={'left'} style={{ color: 'white', fontWeight: '500' }}>
+                            <Typography align={'left'} style={{color: 'white', fontWeight: '500'}}>
                                 Session Date
                             </Typography>
                         </Grid>
                         <Grid item xs={2} md={2}>
-                            <Typography align={'left'} style={{ color: 'white', fontWeight: '500' }}>
+                            <Typography align={'left'} style={{color: 'white', fontWeight: '500'}}>
                                 Day
                             </Typography>
                         </Grid>
                         <Grid item xs={2} md={2}>
-                            <Typography align={'left'} style={{ color: 'white', fontWeight: '500' }}>
+                            <Typography align={'left'} style={{color: 'white', fontWeight: '500'}}>
                                 Time
                             </Typography>
                         </Grid>
                         <Grid item xs={2} md={2}>
-                            <Typography align={'left'} style={{ color: 'white', fontWeight: '500' }}>
+                            <Typography align={'left'} style={{color: 'white', fontWeight: '500'}}>
                                 Tuition
                             </Typography>
                         </Grid>
                         <Grid item xs={2} md={2}>
-                            <Typography align={'left'} style={{ color: 'white', fontWeight: '500' }}>
+                            <Typography align={'left'} style={{color: 'white', fontWeight: '500'}}>
                                 Status
                             </Typography>
                         </Grid>
@@ -209,9 +209,9 @@ class CourseSessionStatus extends Component {
                 <Grid container spacing={8}>
                     {this.state.sessions.length !== 0 ?
                         this.state.sessions.map((session, i) => {
-                            let { day, date, startTime, endTime, status, tuition } = this.state.type === "T" ?
+                            let {day, date, startTime, endTime, status, tuition} = this.state.type === "T" ?
                                 this.sessionDataParse(session) : this.courseDataParser(session);
-                            return (<Grid item xs={12 }md={12}
+                            return (<Grid item xs={12} md={12}
                                 className={'accounts-table-row'}
                                 key={i}>
                                 <Paper square={true}>
@@ -248,7 +248,7 @@ class CourseSessionStatus extends Component {
                         }) :
                         <Grid item xs={12} md={12}>
                             <Paper className={'info'}>
-                                <Typography style={{ fontWeight: 700 }}>
+                                <Typography style={{fontWeight: 700}}>
                                     No Courses Yet!
                                 </Typography>
                             </Paper>
