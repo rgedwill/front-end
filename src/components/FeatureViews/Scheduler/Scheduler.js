@@ -1,7 +1,7 @@
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import PropTypes, {bool} from "prop-types";
-import React, {Component} from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import PropTypes, { bool } from "prop-types";
+import React, { Component } from "react";
 
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -29,10 +29,12 @@ import DateRangeOutlinedIcon from "@material-ui/icons/DateRangeOutlined";
 import ViewListIcon from "@material-ui/icons/ViewList";
 import SearchIcon from "@material-ui/icons/Search";
 import TodayIcon from "@material-ui/icons/Today";
+import { ReactComponent as editIcon } from "./icons/editIcon.svg";
 
 // Tool tip dependencies
 import tippy from "tippy.js";
 import "tippy.js/themes/google.css";
+
 import "./scheduler.scss";
 
 class Scheduler extends Component {
@@ -141,6 +143,7 @@ class Scheduler extends Component {
             const Month = MonthConverter[startMonth];
 
             //Start times and end times variable
+            console.log(info);
             let startTime = start.slice(11);
             let endTime = end.slice(11);
 
@@ -160,10 +163,23 @@ class Scheduler extends Component {
             return finalTime;
 
         }
+
+        function editTippy() {
+            console.log("Asd")
+        }
+        
         new tippy(info.el, {
             "content":
                 `
                 <div class="toolTip">
+                <div class="container">
+                <div class="container>
+                    <div class="edit" align="right">
+                        <button class='edit-icon'/>
+                        <button class='trash-icon'/>
+                        <button class='more-icon'/>
+                    </div>
+                    </div>
                     <div class='title'><h3> ${info.event.title} </h3></div>
                     <div class="container">
                         <div class='clock'><span class='clock_icon'>  ${formatDate(info.event.extendedProps.start_time, info.event.extendedProps.end_time)}</span></div>
@@ -175,7 +191,7 @@ class Scheduler extends Component {
             `
             ,
             "theme": "light",
-            "placement": "right",
+            "followCursor": "initial",
             "interactive": true,
         });
     }
@@ -276,7 +292,6 @@ class Scheduler extends Component {
     // Function to parse the inital state into data that full calendar could
     getEvents = () => {
         let courseKeys = Object.keys(this.props.sessions);
-
         // creates an array from courseKeys [0,1,2,3,...,10]
         let sessionsInViewList = courseKeys.map((courseKey) => {
             // course will get each session and map with courseKey
@@ -290,23 +305,22 @@ class Scheduler extends Component {
                 // sessionKey is the variable named inside the map, this is mapping over each coursekey
                 // session is the matched pairs of course and session objects
                 let session = this.props.sessions[courseKey][sessionKey];
-
-                session["title"] = this.props.courses[session.course_id].title;
-                session["description"] = this.props.courses[session.course_id].description;
-                session["type"] = this.props.courses[session.course_id].type;
-                session["resourceId"] = this.props.courses[session.course_id].room_id;
-
+                const allSessions = this.props.courses[session.course_id]
+                session["title"] = allSessions.title;
+                session["description"] = allSessions.description;
+                session['type'] = allSessions.type;
+                session['resourceId'] = allSessions.room_id;
+                session['room_id'] = allSessions.room_id;
+                session["start_time"] = this.props.sessions[courseKey][sessionKey].start
+                session["end_time"] = this.props.sessions[courseKey][sessionKey].end
                 return session;
-
             });
             return courseSessions;
         });
-
         let sessionsInView = [];
         sessionsInViewList.forEach((sessionsList) => {
             sessionsInView = sessionsInView.concat(sessionsList);
         });
-
         return sessionsInView.map((el) => ({
             ...el,
             "url": `/scheduler/view-session/${el.course_id}/${el.session_id}`,
@@ -349,7 +363,7 @@ class Scheduler extends Component {
             this.setState({
                 "calendarResourcesViews": instructors,
                 //This is where I need to update state and change it to the instructors schedule
-                "calendarEvents":  instructorsSchedule,
+                "calendarEvents": instructorsSchedule,
             });
         }
     }
@@ -357,7 +371,7 @@ class Scheduler extends Component {
 
     // gets the values of course object
     getRoomResources = () =>
-        Object.values(this.props.courses).map(({room_id}) => ({
+        Object.values(this.props.courses).map(({ room_id }) => ({
             "id": room_id,
             "title": `Room ${room_id}`,
         }));
@@ -482,12 +496,12 @@ class Scheduler extends Component {
                             </Grid>
                             <Grid item>
                                 <Button
-                                    onClick={() => {this.changeViewToCalendar();}}
+                                    onClick={() => { this.changeViewToCalendar(); }}
                                 >Course</Button>
                             </Grid>
                             <Grid item >
                                 <Button
-                                    onClick={() => {this.changeViewToResource();}}
+                                    onClick={() => { this.changeViewToResource(); }}
                                 >Resource</Button>
                             </Grid>
                         </div>
