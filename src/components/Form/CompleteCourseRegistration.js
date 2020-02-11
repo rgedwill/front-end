@@ -1,23 +1,23 @@
 import React from "react";
-import {NavLink, withRouter} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {Paper, Tooltip, Typography} from "@material-ui/core";
+import { NavLink, withRouter } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Paper, Tooltip, Typography } from "@material-ui/core";
 import AccountsCards from "../FeatureViews/Search/cards/AccountsCards";
 import Grid from "@material-ui/core/Grid";
 import * as hooks from "../../actions/hooks";
 import Loading from "../Loading";
-import {stringToColor} from "../FeatureViews/Accounts/accountUtils";
+import { stringToColor } from "../FeatureViews/Accounts/accountUtils";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 
-export function CompleteCourseRegistration ({registeredCourseForm, courseType}){
-    const students = useSelector(({Users})=>Users.StudentList);
-    const instructors = useSelector(({Users}) => Users.InstructorList);
-    const courses = useSelector(({Course})=> Course.NewCourseList);
+export function CompleteCourseRegistration({ registeredCourseForm, courseType }) {
+    const students = useSelector(({ Users }) => Users.StudentList);
+    const instructors = useSelector(({ Users }) => Users.InstructorList);
+    const courses = useSelector(({ Course }) => Course.NewCourseList);
 
     let studentID = registeredCourseForm.student_id;
     const course_id = registeredCourseForm.course_id;
-    const courseStatus = hooks.useCourse( typeof course_id !== "string" && course_id);
+    const courseStatus = hooks.useCourse(typeof course_id !== "string" && course_id);
 
     const instructorID = {
         "course": courses[course_id] && courses[course_id].instructor_id,
@@ -28,10 +28,10 @@ export function CompleteCourseRegistration ({registeredCourseForm, courseType}){
 
     const studentStatus = hooks.useStudent(studentID);
 
-    if(hooks.isLoading(instructorStatus) ||
+    if (hooks.isLoading(instructorStatus) ||
         hooks.isLoading(courseStatus) ||
-        hooks.isLoading(studentStatus)){
-        return <Loading/>
+        hooks.isLoading(studentStatus)) {
+        return <Loading />
     }
 
     const styles = (username) => ({
@@ -45,7 +45,7 @@ export function CompleteCourseRegistration ({registeredCourseForm, courseType}){
 
     const rawStudent = students[studentID];
     const student = {
-        user:{
+        user: {
             id: rawStudent.user_id,
             first_name: rawStudent.first_name,
             last_name: rawStudent.last_name,
@@ -70,8 +70,8 @@ export function CompleteCourseRegistration ({registeredCourseForm, courseType}){
             "hour": "2-digit",
             "minute": "2-digit",
         };
-        const formattedTime = "01/01/2020 " + time.replace("T","");
-        return new Date(formattedTime).toLocaleTimeString("eng-us",timeOptions);
+        const formattedTime = "01/01/2020 " + time.replace("T", "");
+        return new Date(formattedTime).toLocaleTimeString("eng-us", timeOptions);
     };
 
     return (
@@ -108,7 +108,7 @@ export function CompleteCourseRegistration ({registeredCourseForm, courseType}){
                                     >
                                         {
                                             `${dateString(course.schedule.start_date)} - ${dateString(course.schedule.end_date)}`
-                                        } <br/>
+                                        } <br />
                                         {
                                             `${timeString(course.schedule.start_time)} - ${timeString(course.schedule.end_time)}`
                                         }
@@ -123,7 +123,7 @@ export function CompleteCourseRegistration ({registeredCourseForm, courseType}){
                                         Instructor
                                     </Typography>
                                     <NavLink to={`/accounts/instructor/${instructor.user_id}`}
-                                             style={{ textDecoration: "none" }}>
+                                        style={{ textDecoration: "none" }}>
                                         <Tooltip title={instructor.name} aria-label="Instructor Name">
                                             <Avatar
                                                 style={styles(instructor.name)}>
@@ -142,8 +142,8 @@ export function CompleteCourseRegistration ({registeredCourseForm, courseType}){
                             justify="flex-end"
                             alignItems="center"
                         >
-                            <Grid item xs={8}>
-                                <AccountsCards user={student}/>
+                            <Grid container xs={8}>
+                                <AccountsCards user={student} />
                             </Grid>
                         </Grid>
                     </Grid>
@@ -155,15 +155,15 @@ export function CompleteCourseRegistration ({registeredCourseForm, courseType}){
                         >
                             <Grid item>
                                 <Button component={NavLink}
-                                        to={"/registration"}
-                                        className={"button"}>
+                                    to={"/registration"}
+                                    className={"button"}>
                                     Register More
                                 </Button>
                             </Grid>
                             <Grid item>
                                 <Button component={NavLink}
-                                        to={"/registration/cart"}
-                                        className={"button"}>
+                                    to={"/registration/cart"}
+                                    className={"button"}>
                                     Checkout
                                 </Button>
                             </Grid>
