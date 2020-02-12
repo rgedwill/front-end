@@ -26,3 +26,13 @@ export const courseDataParser = (course) => {
         "is_confirmed": course.is_confirmed,
     };
 };
+
+export const paymentStatus = (lastPaidSession, sessionDate, numSessions) => {
+    if (lastPaidSession <= sessionDate) {
+        return "Paid";
+    }
+    if (!Number.isInteger(numSessions)) {
+        return "Partially paid";
+    }
+    return "Unpaid";
+};
