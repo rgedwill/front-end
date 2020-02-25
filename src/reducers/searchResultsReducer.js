@@ -3,10 +3,12 @@ import * as actions from "./../actions/actionTypes";
 import {SEARCH_ALL} from "../actions/actionTypes";
 
 export default function course(state = initialState.SearchResults, {payload, type}) {
-    let status = 1;
+    let status = 0;
     if(payload){
-        if( payload.response && Object.keys(payload.response).length > 0){
+        if( payload.response && Object.keys(payload.response).length > 0 && payload.response.status){
             status = payload.response.status;
+        } else if(payload.status){
+            status = payload.status;
         }
     }
 
@@ -72,10 +74,10 @@ export default function course(state = initialState.SearchResults, {payload, typ
 const handleAccountSearchResults = (state, payload, status) =>{
     let {response}= payload;
     let {data} = response;
-
     return {
         ...state,
         accounts:data.results,
+        account_num_results:data.count,
         searchQueryStatus: {
             ...state.searchQueryStatus,
             account: status,
@@ -83,11 +85,11 @@ const handleAccountSearchResults = (state, payload, status) =>{
     }
 };
 
-const handleCourseSearchResults = (state, {id, response}, status) =>{
-    let {data} = response;
+const handleCourseSearchResults = (state, payload, status) =>{
     return {
         ...state,
-        courses:data,
+        courses:payload.response.data.results,
+        course_num_results: payload.response.data.count,
         searchQueryStatus: {
             ...state.searchQueryStatus,
             course: status,

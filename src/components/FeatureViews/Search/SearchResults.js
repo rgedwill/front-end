@@ -48,7 +48,7 @@ const SearchResults = (props) => {
     });
     const params = useParams();
 
-    const { accounts, courses, SearchQuery } = searchState;
+    const { accounts, courses, course_num_results, account_num_results, SearchQuery } = searchState;
 
     useEffect(()=>{
         return ()=>{
@@ -59,13 +59,13 @@ const SearchResults = (props) => {
     const numberOfResults = () => {
         switch (searchState.primaryFilter) {
             case SEARCH_ALL: {
-                return accounts.length + courses.length;
+                return course_num_results + account_num_results;
             }
             case SEARCH_ACCOUNTS: {
-                return accounts.length;
+                return account_num_results;
             }
             case SEARCH_COURSES: {
-                return courses.length
+                return course_num_results;
             }
         }
     };
@@ -167,7 +167,7 @@ const SearchResults = (props) => {
                             </Grid>
                             : ""}
                             {
-                                courses.length && searchState.primaryFilter !== SEARCH_COURSES ? <hr /> :""
+                                course_num_results && searchState.primaryFilter !== SEARCH_COURSES ? <hr /> :""
                             }
 
                         <Grid item xs={12}>
@@ -177,11 +177,11 @@ const SearchResults = (props) => {
                                 alignItems="center">
                                 <Grid item className="searchResults">
                                     <Typography className={"resultsColor"} align={'left'} gutterBottom>
-                                        {accounts.length > 0 && searchState.primaryFilter !== SEARCH_COURSES ? "Accounts" : ""}
+                                        {account_num_results > 0 && searchState.primaryFilter !== SEARCH_COURSES ? "Accounts" : ""}
                                     </Typography>
                                 </Grid>
                                 {
-                                    (accounts.length > 0 && searchState.primaryFilter === SEARCH_ALL) &&
+                                    (account_num_results > 0 && searchState.primaryFilter === SEARCH_ALL) &&
                                     <Grid item >
                                         <Chip label="See All Accounts"
                                               className="searchChip"
@@ -200,7 +200,7 @@ const SearchResults = (props) => {
                                         </Grid>
                                     ))
                                     :
-                                    accounts.length > 0 && searchState.primaryFilter !== SEARCH_COURSES?
+                                    account_num_results > 0 && searchState.primaryFilter !== SEARCH_COURSES?
                                         accounts.slice(start["account"], end["account"]).map((account) => (
                                             <Grid item
                                                   key={account.user_id}
@@ -211,7 +211,7 @@ const SearchResults = (props) => {
                                         :
                                         ""}
                             </Grid>
-                            {accounts.length > 4 ?
+                            {account_num_results > 4 ?
                                 <div className={"results-nav"}>
                                     {
                                          <IconButton disabled={currentPage.account === 1}
@@ -222,7 +222,7 @@ const SearchResults = (props) => {
                                     }
                                     {searchState.params.account.accountPage}
                                     {
-                                         <IconButton disabled={accounts.length > 7}
+                                         <IconButton disabled={account_num_results > 7}
                                             className={"more"}
                                             onClick={displayResults("more", SEARCH_ACCOUNTS)}>
                                             <MoreResultsIcon />
@@ -243,7 +243,7 @@ const SearchResults = (props) => {
                                     </Grid>
                                 </Grid> : ""
                         }
-                        {accounts.length && courses.length !== 0&&searchState.primaryFilter !== SEARCH_ACCOUNTS? <hr /> : ""}
+                        {account_num_results && course_num_results !== 0&&searchState.primaryFilter !== SEARCH_ACCOUNTS? <hr /> : ""}
                         {
                             searchState.primaryFilter !== SEARCH_ACCOUNTS ? <Grid item xs={12}>
                                 <Grid container
@@ -252,11 +252,11 @@ const SearchResults = (props) => {
                                     alignItems="center">
                                     <Grid item className="searchResults">
                                         <Typography className={"resultsColor"} align={'left'} >
-                                            {courses.length > 0 && params.type !== "course" ? "Courses" : "" }
+                                            {course_num_results > 0 && params.type !== "course" ? "Courses" : "" }
                                         </Typography>
                                     </Grid>
                                     {
-                                        (courses.length > 0 && searchState.primaryFilter === SEARCH_ALL) &&
+                                        (course_num_results > 0 && searchState.primaryFilter === SEARCH_ALL) &&
                                         <Grid item style={{ "paddingRight": "1vh" }}>
                                             <Chip label="See All Courses"
                                                   className="searchChip"
@@ -273,7 +273,7 @@ const SearchResults = (props) => {
                                 </Grid>
                             </Grid> : ""
                         }
-                        {courses.length > 4 ?
+                        {course_num_results > 4 ?
                             <div className={"results-nav"}>
                                 {
                                      <IconButton disabled={currentPage.course === 1}
@@ -284,7 +284,7 @@ const SearchResults = (props) => {
                                 }
                                 {currentPage.course}
                                 {
-                                     <IconButton disabled={courses.length > 7}
+                                     <IconButton disabled={course_num_results > 7}
                                         className={"more"}
                                         onClick={displayResults("more", SEARCH_COURSES)}>
                                         <MoreResultsIcon />
